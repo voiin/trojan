@@ -1,0 +1,139 @@
+期望效果
+Panel与Trojan共存并且隐藏Panel访问路径。
+
+前置条件
+本文假设你已完全理解自建梯子教程 --Trojan版本，否则请先按照自建梯子教程 --Trojan版本配置好服务器；
+不能使用root用户，但是要确保用户具有sudo权限，使用配置Trojan的时候的同一个账户也是可以的参考；
+系统要求：Ubuntu >= 16.04 or Debian >= 9。
+配置
+更新源
+cd
+sudo apt update
+sudo apt upgrade -y
+安装依赖
+安装基础依赖
+sudo apt install -y nginx curl git unzip
+安装数据库
+sudo apt install -y mariadb-server
+安装PHP
+Ubuntu 16.04 需要从ppa源安装
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+sudo apt install -y php7.2-fpm php7.2-mysql php7.2-cli php7.2-xml php7.2-json php7.2-mbstring php7.2-tokenizer php7.2-bcmath
+Debian 9 需要从ppa源安装
+sudo apt install -y apt-transport-https ca-certificates
+wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+echo "deb https://packages.sury.org/php/ stretch main" | sudo tee /etc/apt/sources.list.d/php.list
+sudo apt update
+sudo apt install -y php7.2-fpm php7.2-mysql php7.2-cli php7.2-xml php7.2-json php7.2-mbstring php7.2-tokenizer php7.2-bcmath
+其他系统(Ubuntu >= 18.04 or Debian >= 10)
+sudo apt install -y php-fpm php-mysql php-cli php-xml php-json php-mbstring php-tokenizer php-bcmath
+配置数据库
+sudo mysql_secure_installation
+这里要输入数据库的root用户的密码，由于是新安装的数据库，故直接回车就好；
+y，设置数据库密码，一会儿要用，建议与Trojan的全局密码相同，方便记忆，因为配置完Panel之后Trojan的全局密码就没用了。
+数据库密码；
+确认数据库密码；
+四个y。
+sudo mysql -u root -p
+输入数据库root用户的密码，该密码是在配置数据库的时候设置的。
+
+下面的两条命令创建了一个叫trojan的数据库和一个叫trojan数据库用户，trojan的密码为<password>，建议与Trojan的全局密码相同，后面要用。
+
+CREATE DATABASE trojan;
+GRANT ALL PRIVILEGES ON trojan.* to trojan@'%' IDENTIFIED BY '<password>';
+下面的命令重新加载privileges并检查配置是否成功，随后退出mysql。
+
+FLUSH PRIVILEGES;
+SHOW DATABASES;
+SELECT User FROM mysql.user;
+quit
+安装PHP软件包管理系统
+cd /var/www
+sudo curl -sS https://getcomposer.org/installer -o composer-setup.php
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+安装NodeJS和npm
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v
+npm -v
+安装Trojan-Panel
+注意，下面第二条命令将trojan-panel权限移交给你当前用户，要求这个用户是具有sudo权限的非root用户（新建这类账户请参考自建梯子教程 --Trojan版本）。如果使用root用户执行npm install是会报错的，如果确实需要使用root执行的话，那么在前面加sudo可以解决。
+
+sudo git clone https://github.com/trojan-gfw/trojan-panel.git
+sudo chown -R $USER:$USER trojan-panel
+cd trojan-panel
+composer install
+npm install
+配置Trojan-Panel运行环境
+cp .env.example .env
+php artisan key:generate
+sudo nano .env
+其中APP_URL和DB_PASSWORD分别是你的域名和数据库密码。
+
+php artisan migrate
+赋予权限
+cd
+sudo chown -R www-data:www-data /var/www/trojan-panel
+配置Nginx
+下面是包含Panel的Nginx配置文件，自己参考自建梯子教程 --Trojan版本中配置Nginx节的说明修改。另外新增的配置要修改的地方有：1. 这段代码中的config关键字，你大可以修改为你自己喜欢的而且不易被猜中的；2. 第18行的PHP版本修改为系统中安装的PHP版本，PHP版本号用php -v命令查看。
+
+server {
+    listen 127.0.0.1:80 default_server;
+
+    server_name <tdom.ml>;
+
+    location / {
+        proxy_pass https://www.ietf.org;
+    }
+
+    location /config {
+        alias /var/www/trojan-panel/public;
+        index index.php;
+        try_files $uri $uri/ @config;
+
+        location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
+    }
+
+    location @config {
+        rewrite /config/(.*)$ /config/index.php?/$1 last;
+    }
+
+}
+
+server {
+    listen 127.0.0.1:80;
+
+    server_name <10.10.10.10>;
+
+    return 301 https://<tdom.ml>$request_uri;
+}
+
+server {
+    listen 0.0.0.0:80;
+    listen [::]:80;
+
+    server_name _;
+
+    return 301 https://$host$request_uri;
+}
+重启Nginx
+sudo systemctl restart nginx
+sudo systemctl status nginx
+更新Trojan配置文件
+sudo nano /usr/local/etc/trojan/config.json
+将mysql中的enabled改为true，password填写刚才为数据库用户trojan设置的密码。
+
+重启Trojan
+sudo systemctl restart trojan
+测试
+浏览器中访问：https://yourdomain.com/config看看是否可以访问Trojan-Panel，如果可以访问Trojan-Panel的话，那么就可以注册账户了。第一个注册的用户是管理员，用户要使用需要管理员审核，即将用户的Quota设为-1。客户端配置文件中的密码填写在Panel注册的用户信息："Username:Password"。
