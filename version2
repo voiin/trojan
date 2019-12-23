@@ -1,3 +1,7 @@
+sudo groupadd certusers
+sudo useradd -r -M -G certusers trojan
+sudo useradd -r -m -G certusers acme
+
 Ubuntu or Debian
 更新源
 
