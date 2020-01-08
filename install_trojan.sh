@@ -192,7 +192,7 @@ server {
 
     server_name _;
 
-    return 301 https://$host$request_uri;
+    return 301 https://<todm.ml>$request_uri;
 }
 EOF
     sed -i "s/<tdom.ml>/$domain/" /etc/nginx/conf.d/0.trojan.conf
@@ -214,6 +214,7 @@ start_trojan(){
 remove_trojan(){
     systemctl stop trojan
     rm -rf .acme.sh
+    rm -rf /var/spool/cron/$(whoami)
     rm -rf /etc/systemd/system/trojan.service
     rm -rf /etc/nginx/conf.d/0.trojan.conf
     rm -rf /usr/local/etc/certfiles
