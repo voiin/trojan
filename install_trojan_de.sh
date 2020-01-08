@@ -204,6 +204,7 @@ start_trojan(){
 remove_trojan(){
     systemctl stop trojan
     rm -rf .acme.sh
+    rm -rf /var/spool/cron/crontabs/$(whoami)
     rm -rf /etc/systemd/system/trojan.service
     rm -rf /etc/nginx/conf.d/0.trojan.conf
     rm -rf /usr/local/etc/certfiles
