@@ -45,6 +45,11 @@ check_status(){
 install_nginx(){
     yum -y update && yum -y install sudo
     sudo yum -y install yum-utils
+    nginx -s stop
+    rm -rf /usr/sbin/nginx
+    rm -rf /etc/nginx
+    rm -rf /etc/init.d/nginx
+    yum -y remove nginx
     touch /etc/yum.repos.d/nginx.repo
 
     cat > /etc/yum.repos.d/nginx.repo << "EOF"
