@@ -47,6 +47,7 @@ check_status(){
 install_nginx(){
     apt update && apt upgrade -y && apt install sudo
     sudo apt install -y curl gnupg2 ca-certificates lsb-release
+    nginx -s stop
     apt -y --purge remove nginx*
     apt -y autoremove
     echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" \
