@@ -273,6 +273,8 @@ grey "===================================
 #  Blogs: https://voiin.com/ && https://www.axrni.cn
 ==================================="
 echo -e "\033[32m 1.\033[0m 安装trojan"
+echo -e "\033[32m 2.\033[0m 停止trojan"
+echo -e "\033[32m 2.\033[0m 重启trojan"
 echo -e "\033[32m 2.\033[0m 卸载trojan"
 echo -e "\033[32m 3.\033[0m 退出脚本"
 grey "==================================="
@@ -286,10 +288,16 @@ grey "==================================="
 	config_nginx
 	start_trojan
 	;;
-        2)
+	2)
+	systemctl stop trojan
+	;;
+	3)
+	systemctl restart trojan
+	;;
+        4)
 	remove_trojan
 	;;
-        3)
+        5)
 	exit 1
 	;;
         *)
