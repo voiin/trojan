@@ -9,6 +9,7 @@
 - 配置证书环节需要你域名DNS服务器的APIkey，目前支持AliyunDNS,CF,VultrDNS,其他DNS暂不支持；
 - 输入域名建议为顶级域名，脚本顺带申请了'WWW'的A记录域名的证书，请在提前在DNS上解析好'www'记录；
 - 脚本申请证书并自动更新证书，并配置定时任务，部署完成过后不需做其他配置；
+- 完成后域名代理的是此github地址 如果想更改 nginx配置文件在/etc/nginx/conf.d/ 修改proxy_pass 后的网址即可；
 - trojan本身占用443端口，建站想开启ssl需另开端口；
 
 [阿里云APIKey地址](https://usercenter.console.aliyun.com)  
