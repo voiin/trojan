@@ -57,22 +57,70 @@ install_nginx(){
     sudo apt install nginx
 }
 
-config_cert(){
+cert_menu(){
     sudo apt install -y socat cron curl
     sudo systemctl start cron
     sudo systemctl enable cron 
     sudo mkdir /usr/local/etc/certfiles
     curl  https://get.acme.sh | sh
-    blue "========================="
-    read -p "输入你的APIkey：" APIkey
-    blue "========================="
-    read -p "输入你的APISecret：" APISecret
-    blue "========================="
+    echo -e "_________________________"
+    echo -e "\033[32m 1.\033[0m Aliyun"
+    echo -e "_________________________"
+    echo -e "\033[32m 2.\033[0m CloudFlare"
+    echo -e "_________________________"
+    echo -e "\033[32m 3.\033[0m Vultr"
+    echo -e "_________________________"
+    read -p "请选择你使用的DNS服务器[1-3]:" dns_name
+    case "$dns_name" in
+      1)
+          Dns='Ali'
+          dns='ali'
+          config_cert
+          ;;
+      2)
+          Dns='CF'
+          dns='cf'
+          config_cert
+          ;;
+      3)
+          Dns='VULTR_API'
+          dns='vultr'
+          config_cert
+          ;;
+      *)
+          clear
+          echo "输入正确数字"
+          sleep 3s
+          cert_menu
+          ;;
+    esac                     
+}
+config_cert(){
+    if [[ "$dns_name" == "1" ]];then
+        blue "========================="
+        read -p "输入你的APIkey：" APIkey
+        blue "========================="
+        read -p "输入你的APISecret：" APISecret
+        blue "========================="
+        export Ali_Secret="$APISecret"
+    else
+        if [[ "$dns_name" == "2" ]];then
+            blue "========================="
+            read -p "输入你的APIkey：" APIkey
+            blue "========================="
+            read -p "输入你的CF_Email：" APISecret
+            blue "========================="
+            export CF_Email="$APISecret"
+        else
+            blue "========================="
+            read -p "输入你的APIkey：" APIkey
+            blue "========================="
+        fi             
+    fi
     read -p "输入已解析到服务器的域名：" domain
     blue "========================="
-    export Ali_Key="$APIkey"
-    export Ali_Secret="$APISecret"
-    .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_ali
+    export ${Dns}_Key="$APIkey"
+    .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_${dns}
     .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/certfiles/private.key --fullchain-file /usr/local/etc/certfiles/certificate.crt
     .acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
@@ -233,7 +281,7 @@ grey "==================================="
     case "$num" in
         1)
 	install_nginx
-	config_cert
+        cert_menu
 	install_trojan
 	config_nginx
 	start_trojan
