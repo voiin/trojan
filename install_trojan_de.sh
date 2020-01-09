@@ -6,7 +6,7 @@ de="Debian"
 if [[ "$(echo "$sys" | grep "$de")" == "" ]] && [[ "$(echo "$sys" | grep "$un")" == "" ]];then
 	echo -e "\033[31m 该脚本不支持此系统！\033[0m"
 fi
-ver='v1.3'
+ver='v1.7'
 function blue(){
     echo -e "\033[34m\033[01m $1 \033[0m"
 }
@@ -268,7 +268,7 @@ start_menu(){
     red "[${ver}]"
 grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
-#  Version: 1.3
+#  Version: 1.7
 #  Author: 韦岐
 #  Blogs: https://voiin.com/ && https://www.axrni.cn
 ==================================="
