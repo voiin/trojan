@@ -4,7 +4,7 @@ if [[ ! -e '/etc/redhat-release' ]];then
 	exit
 fi
 
-ver='v1.5'
+ver='v1.7'
 function blue(){
     echo -e "\033[34m\033[01m $1 \033[0m"
 }
@@ -281,13 +281,15 @@ start_menu(){
     red "[${ver}]"
 grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
-#  Version: 1.5
+#  Version: 1.7
 #  Author: 韦岐
 #  Blogs: https://voiin.com/ && https://www.axrni.cn
 ==================================="
 echo -e "\033[32m 1.\033[0m 安装trojan"
 echo -e "\033[32m 2.\033[0m 卸载trojan"
-echo -e "\033[32m 3.\033[0m 退出脚本"
+echo -e "\033[32m 3.\033[0m 停止trojan"
+echo -e "\033[32m 4.\033[0m 重启trojan"
+echo -e "\033[32m 5.\033[0m 退出脚本"
 grey "==================================="
     check_status
     read -p "请输入数字[1-3]:" num
@@ -299,10 +301,16 @@ grey "==================================="
 	config_nginx
 	start_trojan
 	;;
-        2)
+	2)
+	systemctl stop trojan
+	;;
+	3)
+	systemctl restart trojan
+	;;
+        4)
 	remove_trojan
 	;;
-        3)
+        5)
 	exit 1
 	;;
         *)
