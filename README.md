@@ -12,8 +12,8 @@
 - trojan本身占用443端口，建站想开启ssl需另开端口；
 
 [阿里云APIKey地址](https://usercenter.console.aliyun.com)  
-[CloudFlare APIkey地址](https://dash.cloudflare.com/efeb3f1f4b0940ed5c2bf595c05903b4/profile/api-tokens)  
-  vr APIkey地址](https://my.vultr.com/settings/#settingsapi)  
+  [CloudFlare APIkey地址](https://dash.cloudflare.com/efeb3f1f4b0940ed5c2bf595c05903b4/profile/api-tokens)  
+  [vultr APIkey地址](https://my.vultr.com/settings/#settingsapi)  
 # 一键脚本
 ## CentOS
 ```bash
