@@ -17,6 +17,8 @@ trojan做为一款新的FQ工具，一般的科学上网采用强加密和随机
   [CloudFlare APIkey地址](https://dash.cloudflare.com/efeb3f1f4b0940ed5c2bf595c05903b4/profile/api-tokens)  
   [vultr APIkey地址](https://my.vultr.com/settings/#settingsapi)  
 # 一键脚本
+
+![image](https://github.com/voiin/trojan/blob/master/trojan.png)
 ## CentOS
 ```bash
 wget -N --no-check-certificate https://raw.githubusercontent.com/voiin/trojan/master/install_trojan.sh && bash install_trojan.sh
