@@ -270,7 +270,7 @@ grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
 #  Version: 1.7
 #  Author: 韦岐
-#  Blogs: https://voiin.com/ && https://www.axrni.cn
+#  Blogs: https://voiin.com && http://www.axrni.cn
 ==================================="
 echo -e "\033[32m 1.\033[0m 安装trojan    \033[34m__##@=@#\\ \033[0m
  ______________    \033[34m++ ####\033[0m                
