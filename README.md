@@ -13,9 +13,10 @@ trojan做为一款新的FQ工具，一般的科学上网采用强加密和随机
 - 完成后域名代理的是此github地址 如果想更改 nginx配置文件在/etc/nginx/conf.d/ 修改proxy_pass 后的网址即可；
 - trojan本身占用443端口，建站想开启ssl需另开端口；
 
-[阿里云APIKey地址](https://usercenter.console.aliyun.com)  
-  [CloudFlare APIkey地址](https://dash.cloudflare.com/efeb3f1f4b0940ed5c2bf595c05903b4/profile/api-tokens)  
+   <center>[阿里云APIKey地址](https://usercenter.console.aliyun.com)</center>
+     [CloudFlare APIkey地址](https://dash.cloudflare.com/efeb3f1f4b0940ed5c2bf595c05903b4/profile/api-tokens)  
   [vultr APIkey地址](https://my.vultr.com/settings/#settingsapi)  
+
 # 一键脚本
 
 ![image](https://github.com/voiin/trojan/blob/master/trojan.png)
