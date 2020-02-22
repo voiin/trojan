@@ -4,7 +4,7 @@ if [[ ! -e '/etc/redhat-release' ]];then
 	exit
 fi
 
-ver='v1.7'
+ver='v1.8'
 function blue(){
     echo -e "\033[34m\033[01m $1 \033[0m"
 }
@@ -284,7 +284,7 @@ start_menu(){
     red "[${ver}]"
 grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
-#  Version: 1.7
+#  Version: 1.8
 #  Author: 韦岐
 #  Blogs: https://voiin.com && http://www.axrni.cn
 ==================================="
