@@ -6,7 +6,7 @@ de="Debian"
 if [[ "$(echo "$sys" | grep "$de")" == "" ]] && [[ "$(echo "$sys" | grep "$un")" == "" ]];then
 	echo -e "\033[31m 该脚本不支持此系统！\033[0m"
 fi
-ver='v1.7'
+ver='v1.8'
 function blue(){
     echo -e "\033[34m\033[01m $1 \033[0m"
 }
@@ -61,6 +61,7 @@ cert_menu(){
     sudo apt install -y socat cron curl
     sudo systemctl start cron
     sudo systemctl enable cron 
+    sleep 3s
     sudo mkdir /usr/local/etc/certfiles
     curl  https://get.acme.sh | sh
     echo -e "_________________________"
@@ -243,6 +244,7 @@ start_trojan(){
     sudo systemctl restart trojan
     sudo systemctl enable trojan
     sudo systemctl enable nginx
+    sleep 5s
     green "--------------------"
     green "--------------------"
     green "###trojan启动完成###"
@@ -259,6 +261,7 @@ remove_trojan(){
     rm -rf /usr/local/etc/certfiles
     rm -rf /usr/local/bin/trojan 
     rm -f /usr/local/etc/trojan/config.json
+    sleep 5s
     green "###trojan卸载完成###"
 }
 
@@ -268,7 +271,7 @@ start_menu(){
     red "[${ver}]"
 grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
-#  Version: 1.7
+#  Version: 1.8
 #  Author: 韦岐
 #  Blogs: https://voiin.com && http://www.axrni.cn
 ==================================="
