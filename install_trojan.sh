@@ -74,9 +74,9 @@ EOF
 }
 cert_menu(){ 
     sudo yum -y install socat openssl curl cronie vim tar
-    sudo systemctl start crond
-    sudo systemctl enable crond
-    sleep 2s
+    systemctl start crond
+    systemctl enable crond
+    sleep 2
     sudo mkdir /usr/local/etc/certfiles
     curl  https://get.acme.sh | sh
     echo -e "_________________________"
@@ -257,7 +257,7 @@ start_trojan(){
     nginx -c /etc/nginx/nginx.conf
     nginx -s reload
     sudo systemctl restart trojan
-    sleep 5s
+    sleep 5
     green "--------------------"
     green "--------------------"
     green "###trojan启动完成###"
@@ -274,7 +274,7 @@ remove_trojan(){
     rm -rf /usr/local/etc/certfiles
     rm -rf /usr/local/bin/trojan 
     rm -rf /usr/local/etc/trojan/config.json
-    sleep 5s
+    sleep 5
     green "###trojan卸载完成###"
 }
 
