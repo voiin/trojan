@@ -74,8 +74,8 @@ EOF
 }
 cert_menu(){ 
     sudo yum -y install socat openssl curl cronie vim tar
-    systemctl start crond
-    systemctl enable crond
+    sudo systemctl start crond
+    sudo systemctl enable crond
     sleep 2
     sudo mkdir /usr/local/etc/certfiles
     curl  https://get.acme.sh | sh
