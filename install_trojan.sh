@@ -282,8 +282,7 @@ start_menu(){
     clear 
     echo -n "trojan一键安装管理脚本" 
     red "[${ver}]"
-grey 
-"===================================
+grey "===================================
 #  System Required: CentOS 7+,Debian 9+,Ubuntu 16+
 #  Version: 1.8
 #  Author: 韦岐
