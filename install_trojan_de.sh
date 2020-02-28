@@ -45,7 +45,7 @@ check_status(){
 }
 
 install_nginx(){
-    apt update && apt upgrade -y && apt install sudo
+    apt update && apt install sudo
     sudo apt install -y curl gnupg2 ca-certificates lsb-release
     nginx -s stop
     apt -y --purge remove nginx*
