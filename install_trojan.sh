@@ -43,7 +43,7 @@ check_status(){
 }
 
 install_nginx(){
-    yum -y update && yum -y install sudo
+    yum -y upgrade && yum -y install sudo
     sudo yum -y install yum-utils
     nginx -s stop
     rm -rf /usr/sbin/nginx
@@ -245,7 +245,7 @@ server {
 
     server_name _;
 
-    return 301 https://<todm.ml>$request_uri;
+    return 301 https://<tdom.ml>$request_uri;
 }
 EOF
     sed -i "s/<tdom.ml>/$domain/" /etc/nginx/conf.d/0.trojan.conf
@@ -256,7 +256,9 @@ start_trojan(){
     nginx -t
     nginx -c /etc/nginx/nginx.conf
     nginx -s reload
-    sudo systemctl restart trojan
+    systemctl restart trojan
+    systemctl enable trojan
+    systemctl enable nginx
     sleep 5
     green "--------------------"
     green "--------------------"
