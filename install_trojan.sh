@@ -43,7 +43,7 @@ check_status(){
 }
 
 install_nginx(){
-    yum -y upgrade && yum -y install sudo
+    yum -y update && yum -y install sudo
     sudo yum -y install yum-utils
     nginx -s stop
     rm -rf /usr/sbin/nginx
