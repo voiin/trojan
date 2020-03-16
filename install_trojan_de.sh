@@ -238,9 +238,9 @@ EOF
 }
 
 start_trojan(){
-    nginx -t
-    nginx -c /etc/nginx/nginx.conf
-    nginx -s reload
+    /usr/sbin/nginx -t
+    /usr/sbin/nginx -c /etc/nginx/nginx.conf
+    /usr/sbin/nginx -s reload
     sudo systemctl restart trojan
     sudo systemctl enable trojan
     sudo systemctl enable nginx
