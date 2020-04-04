@@ -62,7 +62,6 @@ cert_menu(){
     sudo systemctl start cron
     sudo systemctl enable cron 
     sleep 3s
-    sudo mkdir /usr/local/etc/certfiles
     curl  https://get.acme.sh | sh
     echo -e "_________________________"
     echo -e "\033[32m 1.\033[0m Aliyun"
@@ -121,8 +120,9 @@ config_cert(){
     read -p "输入已解析到服务器的域名：" domain
     blue "========================="
     export ${Dns}_Key="$APIkey"
+    sudo mkdir /usr/local/etc/${domain}
     .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_${dns}
-    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/${domain}/privkey.pem --fullchain-file /usr/local/etc/${domain}/fullchain.pem
+    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/${domain}/private.key --fullchain-file /usr/local/etc/${domain}/fullchain.crt
     .acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
 
@@ -142,8 +142,8 @@ cat > /usr/local/etc/trojan/config.json << "EOF"
   ],
   "log_level": 1,
   "ssl": {
-    "cert": "/usr/local/etc/certfiles/certificate.crt",
-    "key": "/usr/local/etc/certfiles/private.key",
+    "cert": "/usr/local/etc/${domain}/fullchain.crt",
+    "key": "/usr/local/etc/${domain}/private.key",
     "key_password": "",
     "cipher": "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256",
     "prefer_server_cipher": true,
