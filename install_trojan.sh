@@ -76,8 +76,7 @@ cert_menu(){
     sudo yum -y install socat openssl curl cronie vim tar
     sudo systemctl start crond
     sudo systemctl enable crond
-    sleep 2
-    sudo mkdir /usr/local/etc/certfiles
+    sleep 2s
     curl  https://get.acme.sh | sh
     echo -e "_________________________"
     echo -e "\033[32m 1.\033[0m Aliyun"
@@ -136,8 +135,9 @@ config_cert(){
     read -p "输入已解析到服务器的域名：" domain
     blue "========================="
     export ${Dns}_Key="$APIkey"
+    sudo mkdir /usr/local/etc/${domain}
     .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_${dns}
-    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/certfiles/private.key --fullchain-file /usr/local/etc/certfiles/certificate.crt
+    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/${domain}/private.key --fullchain-file /usr/local/etc/${domain}/fullchain.crt
     .acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
 
