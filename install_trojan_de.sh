@@ -121,8 +121,8 @@ config_cert(){
     read -p "输入已解析到服务器的域名：" domain
     blue "========================="
     export ${Dns}_Key="$APIkey"
-    .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_${dns}
-    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/certfiles/private.key --fullchain-file /usr/local/etc/certfiles/certificate.crt
+    .acme.sh/acme.sh --issue -d ${domain} --dns dns_${dns}
+    .acme.sh/acme.sh --install-cert -d ${domain} --key-file /usr/local/etc/${domain}/privkey.pem --fullchain-file /usr/local/etc/${domain}/fullchain.pem
     .acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
 
