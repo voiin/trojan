@@ -145,7 +145,7 @@ install_trojan(){
     yum -y install xz
     sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
     sudo cp /usr/local/etc/trojan/config.json /usr/local/etc/trojan/config.json.bak
-cat > /usr/local/etc/trojan/config.json << "EOF"
+cat > /usr/local/etc/trojan/config.json <<-EOF
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
@@ -256,7 +256,7 @@ start_trojan(){
     nginx -t
     nginx -c /etc/nginx/nginx.conf
     nginx -s reload
-    systemctl restart trojan
+    systemctl start trojan
     systemctl enable trojan
     systemctl enable nginx
     sleep 5
