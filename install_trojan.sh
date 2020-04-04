@@ -157,8 +157,8 @@ cat > /usr/local/etc/trojan/config.json << "EOF"
   ],
   "log_level": 1,
   "ssl": {
-    "cert": "/usr/local/etc/certfiles/certificate.crt",
-    "key": "/usr/local/etc/certfiles/private.key",
+    "cert": "/usr/local/etc/${domain}/fullchain.crt",
+    "key": "/usr/local/etc/${domain}/private.key",
     "key_password": "",
     "cipher": "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256",
     "prefer_server_cipher": true,
