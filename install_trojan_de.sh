@@ -130,7 +130,7 @@ install_trojan(){
     sudo apt install -y libcap2-bin xz-utils
     sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/trojan-gfw/trojan-quickstart/master/trojan-quickstart.sh)"
     sudo cp /usr/local/etc/trojan/config.json /usr/local/etc/trojan/config.json.bak
-cat > /usr/local/etc/trojan/config.json << "EOF"
+cat > /usr/local/etc/trojan/config.json <<-EOF
 {
   "run_type": "server",
   "local_addr": "0.0.0.0",
