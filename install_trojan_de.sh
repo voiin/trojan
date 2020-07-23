@@ -51,7 +51,7 @@ install_nginx(){
     apt -y --purge remove nginx*
     apt -y autoremove
     echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" \
-| sudo tee /etc/apt/sources.list.d/nginx.list
+    | sudo tee /etc/apt/sources.list.d/nginx.list
     curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
     sudo apt update
     sudo apt install nginx
