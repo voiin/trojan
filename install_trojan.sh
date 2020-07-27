@@ -136,8 +136,8 @@ config_cert(){
     blue "========================="
     export ${Dns}_Key="$APIkey"
     sudo mkdir /usr/local/etc/${domain}
-    .acme.sh/acme.sh --issue -d ${domain} -d www.${domain} --dns dns_${dns}
-    .acme.sh/acme.sh --install-cert -d ${domain} -d www.${domain} --key-file /usr/local/etc/${domain}/private.key --fullchain-file /usr/local/etc/${domain}/fullchain.crt
+    .acme.sh/acme.sh --issue -d ${domain} --dns dns_${dns}
+    .acme.sh/acme.sh --install-cert -d ${domain} --key-file /usr/local/etc/${domain}/private.key --fullchain-file /usr/local/etc/${domain}/fullchain.crt
     .acme.sh/acme.sh  --upgrade  --auto-upgrade
 }
 
