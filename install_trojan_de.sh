@@ -202,11 +202,9 @@ config_nginx(){
     cat > /etc/nginx/conf.d/0.trojan.conf << "EOF"
 server {
     listen 127.0.0.1:80 default_server;
-
     server_name <tdom.ml>;
-
     location / {
-        proxy_pass https://github.com/voiin;
+        proxy_pass https://voiin.github.io;
         proxy_set_header Host $proxy_host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Remote-Port $proxy_add_x_forwarded_for;
@@ -218,18 +216,14 @@ server {
 
 server {
     listen 127.0.0.1:80;
-
     server_name <10.10.10.10>;
-
     return 301 https://<tdom.ml>$request_uri;
 }
 
 server {
     listen 0.0.0.0:80;
     listen [::]:80;
-
     server_name _;
-
     return 301 https://<tdom.ml>$request_uri;
 }
 EOF
